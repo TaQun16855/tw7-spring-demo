@@ -67,7 +67,6 @@
     </div>
 
     <script>
-      // 一度だけセットアップ
       document.querySelectorAll('.btn-api').forEach(btn => {
         btn.addEventListener('click', async () => {
           const method = btn.dataset.method;
@@ -85,67 +84,7 @@
         });
       });
     </script>
-
-    <!-- 各ボタンクリックでFetchを呼び出すスクリプト -->
-    <!-- <script>
-      // GET
-      document.getElementById('btnGet').addEventListener('click', function () {
-        fetch('/api/get')                 // GETはデフォルトメソッド
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById('getResult').textContent = data;
-          })
-          .catch(error => console.error('Error:', error));
-      });
-
-      // POST
-      document.getElementById('btnPost').addEventListener('click', function () {
-        fetch('/api/post', {
-          method: 'POST'
-        })
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById('postResult').textContent = data;
-          })
-          .catch(error => console.error('Error:', error));
-      });
-
-      // PUT
-      document.getElementById('btnPut').addEventListener('click', function () {
-        fetch('/api/put', {
-          method: 'PUT'
-        })
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById('putResult').textContent = data;
-          })
-          .catch(error => console.error('Error:', error));
-      });
-
-      // PATCH
-      document.getElementById('btnPatch').addEventListener('click', function () {
-        fetch('/api/patch', {
-          method: 'PATCH'
-        })
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById('patchResult').textContent = data;
-          })
-          .catch(error => console.error('Error:', error));
-      });
-
-      // DELETE
-      document.getElementById('btnDelete').addEventListener('click', function () {
-        fetch('/api/delete', {
-          method: 'DELETE'
-        })
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById('deleteResult').textContent = data;
-          })
-          .catch(error => console.error('Error:', error));
-      });
-    </script> -->
+          
 
 </body>
 </html>
