@@ -1,0 +1,63 @@
+services:
+  # DB 
+  postgres:
+    image: postgres:15.3
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: demo
+      TZ: Asia/Tokyo
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - demo-network
+    restart: always
+    tty: true
+
+  # App 
+  app:
+    build:
+      context: ./demo
+      dockerfile: Dockerfile
+    container_name: springboot
+    volumes:
+      - ./demo:/root/app
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - demo-network
+    restart: always
+    working_dir: /root/app
+    tty: true
+
+
+  selenium-hub:
+    image: selenium/hub:4.9.1
+    container_name: selenium-hub
+    networks:
+      - demo-network
+    ports:
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome:4.9.1
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - demo-network
+
+networks:
+  demo-network:
+    driver: bridge
+

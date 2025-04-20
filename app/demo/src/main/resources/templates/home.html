@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>tw7</title>
+    <!-- Bootstrap CSS (CDN) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+    <div th:replace="~{fragments/header :: navbar}"></div>
+
+    <!-- メインコンテンツ -->
+    <div class="container mt-5">
+        <h1 class="mb-4">ホーム</h1>
+        <p class="lead">機能は随時追加予定</p>
+        
+        <!-- カード一覧 -->
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="/image/penguin.png" class="card-img-top" alt="Card Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Thymeleaf</h5>
+                        <p class="card-text">Thymeleafで使える機能</p>
+                        <a th:href="@{/thymeleaf}" class="btn btn-primary">詳細を見る</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="/image/penguin.png" class="card-img-top" alt="Card Image">
+                    <div class="card-body">
+                        <h5 class="card-title">RestAPI</h5>
+                        <p class="card-text">RestAPI代表的なメソッド</p>
+                        <a th:href="@{/api}" class="btn btn-primary">詳細を見る</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="/image/penguin.png" class="card-img-top" alt="Card Image">
+                    <div class="card-body">
+                        <h5 class="card-title">カードタイトル 3</h5>
+                        <p class="card-text">ここに内容</p>
+                        <a href="#" class="btn btn-primary">詳細を見る</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+
+
+</body>
+</html>
