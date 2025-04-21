@@ -11,38 +11,36 @@
 <body>
 
     <!-- ヘッダー -->
-    <!-- thymeleafのfragments機能で共通化して使いまわし"fragments/header.html"に本体あり -->
+    <!-- thymeleafのfragments機能で共通化して使いまわしてる。"fragments/header.html"に本体あり -->
     <div th:replace="~{fragments/header :: navbar}"></div>
 
     <div class="container mt-5">
-        <!-- タイトル -->
         <h1>Modelに入れたデータの表示</h1>
 
-        <!-- カード -->
         <!-- ${xxx} : {}の中にはJSPとかと同じようにjavaのコード書ける -->
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title" th:text="String">title</h5>
+                <h5 class="card-title" th:text="|文字列の表示 : String|">title</h5>
                 <p class="card-text" th:text="${message}">context</p>
-                <p class="card-text" th:text="${'「message == bye!」 -> ' + message.equals('bye!')}">context</p>
+                <p class="card-text" th:text="${'「message == hello!」 -> ' + message.equals('hello!')}">context</p>
             </div>
         </div>
 
         <!-- ${オブジェクト} : オブジェクトの.toString()メソッドが呼び出されて表示されてる -->
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title" th:text="List">title</h5>
+                <h5 class="card-title" th:text="|リストの表示 : List|">title</h5>
                 <p class="card-text" th:text="${list}">context</p>
-                <p class="card-text" th:text="${list.toString()}">context</p>
-                <p class="card-text" th:text="${list.get(0)}">context</p>
+                <p class="card-text" th:text="|list.toString() = ${list.toString()}|">context</p>
+                <p class="card-text" th:text="|list.get(0) = ${list.get(0)}|">context</p>
             </div>
         </div>
 
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title" th:text="Map">title</h5>
+                <h5 class="card-title" th:text="|マップの表示 : Map|">title</h5>
                 <p class="card-text" th:text="${map}">context</p>
-                <p class="card-text" th:text="${map.get('two')}">context</p>
+                <p class="card-text" th:text="|map.get('two') = ${map.get('two')}|">context</p>
             </div>
         </div>
 
@@ -52,14 +50,14 @@
         <!-- if unless -->
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title" th:text="if">title</h5>
+                <h5 class="card-title" th:text="|if文|">title</h5>
                 <span>「message」っていう値があれば表示:</span>
                 <span class="card-text" th:if="${message}" th:text="|${message}|" style="color: cyan;">context</span>
             </div>
         </div>
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title" th:text="unless">title</h5>
+                <h5 class="card-title" th:text="|unless文|">title</h5>
                 <span>「fake_massage」っていう値がなければ表示:</span>
                 <span class="card-text" th:unless="${fake_massage}" th:text="|値ないよ|" style="color: red;">context</span>
             </div>
@@ -68,45 +66,17 @@
         <!-- each -->
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title" th:text="each">title</h5>
-                <span>リストの中身を表示:</span>
-                <div th:each="cur: ${list}">
+                <h5 class="card-title" th:text="|each式|">title</h5>
+                <span>リストの中身を表示</span>
+                <div th:each="cur : ${list}">
                     <li class="card-text" th:text="${cur}">context</li>
                 </div>
-                <span>マップの中身を表示:</span>
+                <span>マップの中身を表示</span>
                 <div th:each="key : ${map.keySet()}">
                     <li class="card-text" th:text="${map.get(key)}">context</li>
                 </div>
             </div>
         </div>
-
-        <!-- form -->
-        <div class="card mt-4">
-            <div class="card-body">
-                <h5 class="card-title" th:text="form">title</h5>
-                <h6 th:if="${username == null || password == null || username.isEmpty() || password.isEmpty()}">ログインしてないよ</h6>
-                <div th:if="${username != null && password != null && !username.isEmpty() && !password.isEmpty()}">
-                    <h6 th:text="'ログインユーザ: ' + ${username}">username</h6>
-                    <h6 th:text="'パスワード: ' + ${password}">password</h6>
-                </div>
-                <form th:action="@{/thymeleaf/user-send}" th:object="${userForm}" th:method="post">
-                    <div>
-                        <span>username:</span>
-                        <input type="text" th:field="*{username}" placeholder="名前入力してね">
-                        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;"></span>
-                    </div>
-                    <div>
-                        <span>password:</span>
-                        <input type="password" th:field="*{password}" placeholder="パスワード入力してね">
-                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></span>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary" type="submit" th:text="送信"></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
 
 
         <!-- 自作オブジェクトの表示方法 -->
@@ -115,13 +85,13 @@
         <!-- 書籍情報 -->
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title" th:text="Book">title</h5>
+                <h5 class="card-title" th:text="|本 : Book|">title</h5>
                 <p class="card-text" th:text="${book}">context</p>
             </div>
         </div>
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title" th:text="Books">title</h5>
+                <h5 class="card-title" th:text="|本のリスト : Books|">title</h5>
                 <div th:each="cur : ${books}">
                     <p class="card-text" th:text="${cur}">context</p>
                 </div>
@@ -131,7 +101,7 @@
         <!-- ジャンル情報 -->
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title" th:text="Genre">title</h5>
+                <h5 class="card-title" th:text="|ジャンル : Genre|">title</h5>
                 <p class="card-text" th:text="'ジャンルコード:' + ${genre.code}">context</p>
                 <p class="card-text" th:text="'ジャンル名:' + ${genre.name}">context</p>
                 <p class="card-text" th:text="'ジャンルの本一覧:'">context</p>
@@ -142,7 +112,7 @@
         </div>
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title" th:text="Genres">title</h5>
+                <h5 class="card-title" th:text="|ジャンルのリスト(+該当の本) : Genres|">title</h5>
                 <div th:each="genre : ${genres}">
                     <p class="card-text" th:text="${genre.name}">context</p>
                     <div th:if="${genre.books}" th:each="cur : ${genre.books}">
