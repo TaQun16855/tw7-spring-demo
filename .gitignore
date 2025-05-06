@@ -1,1 +1,1 @@
-./app/postgres-data/
+app/postgres-data/**
