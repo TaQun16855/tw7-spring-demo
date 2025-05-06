@@ -1,4 +1,7 @@
+
 -- 初期化
+DROP TABLE IF EXISTS sales_details;
+DROP TABLE IF EXISTS sales;
 DROP TABLE IF EXISTS test;
 DROP TABLE IF EXISTS book_genres;
 DROP TABLE IF EXISTS genres;
@@ -49,3 +52,22 @@ CREATE TABLE book_genres (
 ); 
 
 
+
+-- 販売テーブル
+CREATE TABLE sales (
+    sales_no VARCHAR(64), 
+
+    CONSTRAINT pk_sales_01 PRIMARY KEY (sales_no) 
+); 
+
+-- 販売詳細テーブル
+CREATE TABLE sales_details (
+    sales_no VARCHAR(64),
+    sales_detail_no INT, 
+    name VARCHAR(128),
+    price VARCHAR(128),
+    quantity VARCHAR(128),
+
+    CONSTRAINT pk_sales_details_01 PRIMARY KEY (sales_no, sales_detail_no),
+    CONSTRAINT fk_sales_details_01 FOREIGN KEY (sales_no) REFERENCES sales (sales_no) ON UPDATE CASCADE ON DELETE CASCADE
+);

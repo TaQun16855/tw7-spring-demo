@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SalesMapper">
+
+    <insert id="insertSales">
+        INSERT INTO sales 
+            (sales_no) 
+        VALUES 
+            (#{sales.salesNo})
+    </insert>
+
+    <insert id="insertSalesDetail">
+        INSERT INTO sales_details 
+            (sales_no, sales_detail_no, name, price, quantity) 
+        VALUES
+        <foreach collection="sales.items" item="item" index="i" separator=",">
+            (#{sales.salesNo}, #{i} + 1, #{item.name}, #{item.price}, #{item.quantity})  
+        </foreach> 
+    </insert>
+    <!-- collection: リスト形式の変数 -->
+    <!-- item: リストを取り出す時の変数 -->
+    <!-- index: 配列(リスト)の添え字 -->
+    <!-- separator:　<foreach>タグの中の式を区切る文字を指定。VALUESの区切りだから","を指定してる -->
+</mapper>

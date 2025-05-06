@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>tw7</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <div th:replace="~{fragments/header :: navbar('multi')}"></div>
+
+    <!-- メインコンテンツ -->
+    <div class="container mt-5">
+        <!-- フォーム -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <h4 class="card-title" th:text="|form(MultiData)|">title</h4>
+                <form th:action="@{/form-multi-data}" th:object="${sales}" th:method="POST">
+                    <div>
+                        <li>
+                            <label>salesNo:</label>
+                            <input type="text" th:field="*{salesNo}" placeholder="salesNo">
+                        </li>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>name</th>
+                                <th>price</th>
+                                <th>quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 初回 -->
+                            <tr th:if="${sales.items == null}">
+                                <td>
+                                    <input type="text" name="items[0].name" placeholder="name">
+                                </td>
+                                <td>
+                                    <input type="text" name="items[0].price" placeholder="price">
+                                </td>
+                                <td>
+                                    <input type="text" name="items[0].quantity" placeholder="quantity">
+                                </td>
+                            </tr>
+                            <tr th:if="${sales.items == null}">
+                                <td>
+                                    <input type="text" name="items[1].name" placeholder="name">
+                                </td>
+                                <td>
+                                    <input type="text" name="items[1].price" placeholder="price">
+                                </td>
+                                <td>
+                                    <input type="text" name="items[1].quantity" placeholder="quantity">
+                                </td>
+                            </tr>
+                            
+                            <!-- 二回目以降 -->
+                            <tr th:if="${sales.items != null}" th:each="item, iterStat : ${sales.items}">
+                                <td>
+                                    <input type="text" th:field="*{items[__${iterStat.index}__].name}" placeholder="name">
+                                </td>
+                                <td>
+                                    <input type="text" th:field="*{items[__${iterStat.index}__].price}" placeholder="price">
+                                </td>
+                                <td>
+                                    <input type="text" th:field="*{items[__${iterStat.index}__].quantity}" placeholder="quantity">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-primary" type="submit" th:text="|送信|"></button>
+                </form>
+            </div>
+
+            <div class="card-body" th:if="${salesSuccess}">
+                <h4 class="card-title" th:text="|success!|">title</h4>
+                <pre th:text="${salesSuccess}">context</pre>
+            </div>
+
+        </div>
+
+        <!-- bulk insert api -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <h4 class="card-title" th:text="|bulk insert|">title</h4>
+                <div id="multi-data-result">
+                </div>
+                <button class="btn btn-success" th:onclick="bulkInsert()" th:text="|bulk insert!|"></button>
+            </div>
+        </div>
+        <script>
+            async function bulkInsert() {
+                const json = await (await fetch('/api/form-multi-data')).json();
+
+                const container = document.getElementById('multi-data-result');
+                const entry = document.createElement('pre');
+
+                entry.textContent = JSON.stringify(json, null, 2);
+                // entry.innerHTML = `
+                //     ${JSON.stringify(json, null, 2)}
+                // `;
+                container.appendChild(entry);
+            }
+        </script>
+    </div>
+
+</body>
+</html>

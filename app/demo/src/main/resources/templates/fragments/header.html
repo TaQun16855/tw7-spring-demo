@@ -1,37 +1,33 @@
 <!-- templates/fragments/header.html -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <body>
-    <div th:fragment="navbar">
-      <!-- ナビゲーションバー -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" th:href="@{/home}">tw7 - spring boot demo</a>
-        <button class="navbar-toggler" type="button"
-                data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false"
-                aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+<div th:fragment="navbar(page)">
+  <!-- ナビゲーションバー -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/home}">&nbsp;&nbsp;tw7 - spring boot demo</a>
+    <button class="navbar-toggler" type="button"
+            data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/home}">
-                Home <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/thymeleaf}">Thymeleaf</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/api}">RestAPI</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/form-validation}">Form+Validation</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/home}" th:classappend="${page.equals('home')} ? ' active':''">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/thymeleaf}" th:classappend="${page.equals('thymeleaf')} ? ' active':''">Thymeleaf</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/api}" th:classappend="${page.equals('api')} ? ' active':''">RestAPI</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/form-validation}" th:classappend="${page.equals('form')} ? ' active':''">Form+Validation</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/form-multi-data}" th:classappend="${page.equals('multi')} ? ' active':''">MultiDataForm</a>
+        </li>
+      </ul>
     </div>
-  </body>
-</html>
+  </nav>
+</div>

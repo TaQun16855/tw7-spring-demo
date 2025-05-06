@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
-import com.example.demo.entity.BookDetail;
+import com.example.demo.data.BookDetail;
 
 @Mapper
 public interface BookDetailMapper {

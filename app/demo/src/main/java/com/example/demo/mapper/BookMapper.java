@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
-import com.example.demo.entity.Book;
+import com.example.demo.data.Book;
 
 /**
  * アノテーション記法のマッパー

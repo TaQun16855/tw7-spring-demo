@@ -28,10 +28,10 @@
                 LEFT OUTER JOIN books b ON bg.book_id = b.id 
     </select>
 
-    <resultMap id="genre" type="com.example.demo.entity.Genre">
+    <resultMap id="genre" type="com.example.demo.data.Genre">
         <id column="code" property="code" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
-        <collection property="books" ofType="com.example.demo.entity.Book">
+        <collection property="books" ofType="com.example.demo.data.Book">
             <result column="book_id" property="id" />
             <result column="book_title" property="title" />
             <result column="book_author" property="author" />
