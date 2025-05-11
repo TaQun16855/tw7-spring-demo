@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>tw7</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <div th:replace="~{fragments/header :: navbar('bulk')}"></div>
+
+    <!-- メインコンテンツ -->
+    <div class="container mt-5">
+        <!-- フォーム -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <h4 class="card-title" th:text="|BulkInsert|">title</h4>
+
+                <form class="row g-3" onsubmit="event.preventDefault(); sendGoods();">
+                    <!-- name -->
+                    <div class="col-sm-6">
+                      <label for="name" class="form-label">Name</label>
+                      <input type="text" id="name" class="form-control" placeholder="name" />
+                    </div>
+                
+                    <!-- color -->
+                    <div class="col-sm-6">
+                      <label for="color" class="form-label">Color</label>
+                      <input type="text" id="color" class="form-control" placeholder="color" />
+                    </div>
+                
+                    <!-- size -->
+                    <div class="col-sm-6">
+                      <label for="size" class="form-label">Size</label>
+                      <input type="text" id="size" class="form-control" placeholder="size" />
+                    </div>
+                
+                    <!-- price -->
+                    <div class="col-sm-6">
+                      <label for="price" class="form-label">Price</label>
+                      <input type="text" id="price" class="form-control" placeholder="price" />
+                    </div>
+                
+                    <div class="col-12 text-end">
+                      <button type="submit" class="btn btn-primary">送信</button>
+                    </div>
+                </form>
+
+                <!-- 参照用の一覧データ -->
+                <h4>商品データ一覧</h4>
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-primary text-center">
+                      <tr>
+                        <th scope="col">name</th>
+                        <th scope="col">color</th>
+                        <th scope="col">size</th>
+                        <th scope="col">price</th>
+                      </tr>
+                    </thead>
+                    <tbody id="goods-body">
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
+        <script>
+            window.onload = async function() {
+                const json = await (await fetch('/api/bulk-insert')).json();
+
+                const container = document.getElementById('goods-body');
+
+                for(const item of json) {
+                    const entry = document.createElement('tr');
+
+                    const name = document.createElement('td');
+                    const color = document.createElement('td');
+                    const size = document.createElement('td');
+                    const price = document.createElement('td');
+
+                    name.textContent = item.name;
+                    color.textContent = item.color;
+                    size.textContent = item.size;
+                    price.textContent = item.price;
+
+                    entry.appendChild(name);
+                    entry.appendChild(color);
+                    entry.appendChild(size);
+                    entry.appendChild(price);
+
+                    container.appendChild(entry);
+                }
+            }
+        </script>
+
+        <script>
+        
+            async function sendGoods() {
+                const name = document.getElementById('name').value;
+                const color = document.getElementById('color').value;
+                const size = document.getElementById('size').value;
+                const price = document.getElementById('price').value;
+
+                const data = { name, color, size, price };
+
+                const res = await fetch('/api/bulk-insert', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+        
+                if (!res.ok) {
+                    console.log('failed!');
+                    throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                }
+                console.log('success!');
+                console.log(await res.json());
+            }
+        </script>
+  
+    </div>
+
+</body>
+</html>

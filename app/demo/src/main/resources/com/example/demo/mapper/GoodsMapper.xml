@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.GoodsMapper">
+
+    <select id="findAll" resultMap="goods">
+        SELECT 
+            * 
+        FROM 
+            goods 
+    </select>
+
+    <select id="findAllSet" resultMap="goods">
+        SELECT 
+            G.name, G.color, G.size, G.price 
+        FROM 
+            goods_sets GS LEFT OUTER JOIN goods G ON GS.goods_id = G.goods_id
+        WHERE
+            GS.sequence = #{sequence} 
+    </select>
+
+    <select id="existsGoods" resultType="boolean">
+        SELECT 
+            CASE 
+                WHEN COUNT(*) = 0 THEN FALSE
+                ELSE TRUE 
+            END AS "exists"
+        FROM 
+            goods 
+        WHERE 
+            TRUE 
+                <if test="!goods.name.isEmpty()">
+                    AND name = #{goods.name}
+                </if>
+                <if test="!goods.color.isEmpty()">
+                    AND color = #{goods.color}
+                </if>
+                <if test="!goods.size.isEmpty()">
+                    AND size = #{goods.size}
+                </if>
+                <if test="!goods.price.isEmpty()">
+                    AND price = #{goods.price}
+                </if>
+    </select>
+
+    <select id="getMaxSeq">
+        SELECT 
+            COALESCE (MAX(sequence), '0') AS max_seq 
+        FROM 
+            goods_sets
+    </select>
+
+
+    <insert id="insert" parameterType="com.example.demo.data.Goods">
+        INSERT INTO 
+            goods_sets (sequence, goods_id)
+        
+            (
+                SELECT 
+                    #{sequence}, 
+                    G.goods_id 
+                FROM 
+                    goods G 
+                WHERE 
+                    TRUE 
+                        <if test="!goods.name.isEmpty()">
+                            AND G.name = #{goods.name}
+                        </if>
+                        <if test="!goods.color.isEmpty()">
+                            AND G.color = #{goods.color}
+                        </if>
+                        <if test="!goods.size.isEmpty()">
+                            AND G.size = #{goods.size}
+                        </if>
+                        <if test="!goods.price.isEmpty()">
+                            AND G.price = #{goods.price}
+                        </if>
+            )
+    </insert>
+
+
+    <resultMap id="goods" type="com.example.demo.data.Goods">
+        <id property="goodsId" column="goods_id" />
+        <result property="name" column="name" />
+        <result property="color" column="color" />
+        <result property="size" column="size" />
+        <result property="price" column="price" />
+    </resultMap>
+</mapper>

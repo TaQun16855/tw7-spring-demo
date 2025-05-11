@@ -1,5 +1,7 @@
 
 -- 初期化
+DROP TABLE IF EXISTS goods_sets;
+DROP TABLE IF EXISTS goods;
 DROP TABLE IF EXISTS sales_details;
 DROP TABLE IF EXISTS sales;
 DROP TABLE IF EXISTS test;
@@ -70,4 +72,25 @@ CREATE TABLE sales_details (
 
     CONSTRAINT pk_sales_details_01 PRIMARY KEY (sales_no, sales_detail_no),
     CONSTRAINT fk_sales_details_01 FOREIGN KEY (sales_no) REFERENCES sales (sales_no) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
+-- 商品テーブル
+CREATE TABLE goods (
+    goods_id VARCHAR(16),
+    name VARCHAR(128) NOT NULL, 
+    color VARCHAR(128) NOT NULL, 
+    size VARCHAR(128) NOT NULL, 
+    price VARCHAR(128) NOT NULL,
+
+    CONSTRAINT pk_goods_01 PRIMARY KEY (goods_id)
+);
+
+-- 商品セットテーブル
+CREATE TABLE goods_sets (
+    sequence VARCHAR(64),
+    goods_id VARCHAR(16), 
+
+    CONSTRAINT pk_goods_sets_01 PRIMARY KEY (sequence, goods_id)
 );
